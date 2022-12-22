@@ -1,0 +1,12 @@
+body {
+    background-color:rgb(48, 47, 47);
+    color: white;
+}
+
+.title {
+    color: rgb(64, 200, 66);
+    text-align: center;
+    padding: 15px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size:35px;
+}

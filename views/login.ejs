@@ -1,50 +1,77 @@
 <!DOCTYPE html>
 <html lang = "en">
     <body>
-        <link rel = "stylesheet" href = "fe-styles.css">
-        
-            <ul>
-                
-                <form method = "post" action = "/enterLogin">
-                    <label class = "title"> Fitness Friend </label>
-                    <li> <label class = "sectitle"> Login </label> </li>
-                    <li class = "normaltext"> Username <input type = "text" name = "username" id = "username"> </li>
-                    <p>
-                    </p>
-                    <li class = "normaltext"> Password <input type = "text" name = "password" id = "password"> </li>
-                    <p>
-    
-                    </p>
-                    <li>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="login.css">
+        <div>
+          <h1 class="title">FitnessFriend</h1>
+            <br/>
+            <!-- <form method = "post" action = "/enterLogin">
+                <h1 class = "title"> Fitness Friend </h1>
+                <p></p>
+                <h2 class = "sectitle"> Login </h2>
+                <p></p>
+                <div class="box">
+                    <label class = "normaltext"> Username: <input type = "text" name = "username" id = "username"> </label>
+                    <p></p>
+                    <label class = "normaltext"> Password: <input type = "text" name = "password" id = "password"> </label>
+                    <p></p>
+                    <label>
                         <input type = "submit" value = "Login" class = "login-btn">
-                    </li>
-                    <p>
+                    </label>
+                </div>
+            </form>
+            <form method = "post" action = "/createAccount">
+                <h1 class = "sectitle">Create Account</h1>
+                <p></p>
+                <label class = "normaltext"> Username: <input type = "text" name = "username" id = "username"> </label>
+                <p></p>
+                <label class = "normaltext"> Password: <input type = "text" name = "password" id = "password"> </label>
+                <p></p>
+                <input type = "submit" value = "Create Account" class = "login-btn">
+            </form> -->
+            <div class="ui one column stackable center aligned page grid">
+              <div class="column eight wide">
+                <form class="ui form" method="post" action="/enterLogin">
+                  <h2 class="ui inverted dividing header">Sign In</h2>
+                  <!-- Username input -->
+                  <div class="inverted transparent field">
+                    <input type="text" name="username" id="username" placeholder="Username" />
+                  </div>
+                  <!-- Password input -->
+                  <div class="field">
+                    <input type="password" name="password" id="password" placeholder="Password"/>
+                  </div>
+                  <!--Submit button-->
+                  <input type="submit" value="Login" class="fluid ui primary button"/>
                 </form>
-                
-                
-                <li>
-                    <form method = "post" action = "/createAccount">
-                        <li>
-                            <label class = "sectitle">Create Account</label>
-                        </li>
-                        <li class = "normaltext"> Enter Username <input type = "text" name = "username" id = "username"> </li>
-                        <p>
-            
-                        </p>
-                        <li class = "normaltext"> Enter Password <input type = "text" name = "password" id = "password"> </li>
-                        <p>
-            
-                        </p>
-                        <p>
-            
-                        </p>
-                        <li>
-                        <input type = "submit" value = "Create Account" class = "login-btn">
-                    </form>    
-        
-                </li>
-    
-            </ul>
-        
+              </div>
+            </div>
+          </br>
+          </br>
+          <div class="ui one column stackable center aligned page grid">
+            <div class="column eight wide">
+              <p class="ui horizontal inverted divider">or</p>
+            </br>
+              <form class="ui inverted form" method="post" action="/createAccount">
+                <h2 class="ui inverted dividing header">Create Account</h2>
+                <!-- Username input -->
+                <div class="field">
+                  <input type="text" name="username" id="username" placeholder="Username" />
+                </div>
+                <!-- Password input -->
+                <div class="field">
+                  <input type="password" name="password" id="password" placeholder="Password"/>
+                </div>
+                <!-- Password input -->
+                <div class="field">
+                  <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password"/>
+                </div>
+                <!--Submit button-->
+                <input type="submit" value="Create Account" class="fluid ui primary button"/>
+              </form>
+            </div>
+          </div>
+        </div>
     </body>
 </html>

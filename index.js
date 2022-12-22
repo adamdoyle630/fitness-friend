@@ -16,7 +16,7 @@ db.pragma('journal_mode = WAL');
 
 // Initialize app
 const app = express();
- 
+
 // link stylesheet to the right folder
 app.use(express.static("public"))
 app.set('view engine', 'ejs');
@@ -66,7 +66,7 @@ app.post('/enterLogin', (req, res) => {
     db.exec(`INSERT INTO log (user, type, date) VALUES ('${userName}', 'Login', '${time}');`);
 
     if (temp === undefined) {
-        res.render('userName-incorrect2');
+        res.render('login-incorrect');
     }
     else {
         req.app.set('user', userName);
@@ -75,16 +75,23 @@ app.post('/enterLogin', (req, res) => {
 });
 
 app.post('/createAccount', (req, res) => {
-    const userName = req.body.username;
-    const passWord = req.body.password; 
-    const prepData = db.prepare(`SELECT * FROM users WHERE user = '${userName}'`);
+    const user = req.body.username;
+    const pass = req.body.password;
+    const passConfirm = req.body.passwordConfirm;
+
+    const prepData = db.prepare(`SELECT * FROM users WHERE user = '${user}'`);
     let temp = prepData.get();
 
     if (temp === undefined) {
-        db.exec(`INSERT INTO users (user, pass) VALUES ('${userName}', '${passWord}')`)
-        res.render('create-account');
+        if (pass === passConfirm) {
+            db.exec(`INSERT INTO users (user, pass) VALUES ('${user}', '${pass}')`);
+            res.render('create-account');
+        }
+        else {
+            res.render('password-mismatch');
+        }
     }
-    else {res.render('userName-exists')};
+    else {res.render('username-exists')};
  });
 
 app.post('/returnLogin', (req, res) => {
