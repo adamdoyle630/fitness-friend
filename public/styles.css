@@ -1,16 +1,15 @@
-body {
-    background-color:rgb(48, 47, 47);
-    color: white;
-}
-
 .title {
-    color: rgb(64, 200, 66);
+    color: rgb(154, 90, 196);
     text-align: center;
     padding: 15px;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size:35px;
 }
 
-.ui.form.field {
-    color: #2e2f31;
+.error-message {
+    color: red;
+}
+
+.account-success-message {
+    color: rgb(15, 158, 15);
 }

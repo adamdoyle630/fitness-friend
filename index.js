@@ -3,6 +3,7 @@ import minimist from 'minimist';
 import Database from 'better-sqlite3';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import { allowedNodeEnvironmentFlags } from 'process';
 
 // Args
 const args = minimist(process.argv.slice(2));
@@ -56,9 +57,18 @@ app.get('/home', (req, res) => {
     res.render('home')
 });
 
+ app.post('/new-workout', (req, res) => {
+    res.render('new-workout');
+});
+
+app.post('/new-account', (req, res) => {
+    res.render('create-account');
+})
+
+// Validate user login
 app.post('/enterLogin', (req, res) => {
     const userName = req.body.username;
-    const passWord = req.body.password; 
+    const passWord = req.body.password;
     const prepData = db.prepare(`SELECT * FROM users WHERE user = '${userName}' and pass = '${passWord}'`);
     let temp = prepData.get();
 
@@ -66,7 +76,7 @@ app.post('/enterLogin', (req, res) => {
     db.exec(`INSERT INTO log (user, type, date) VALUES ('${userName}', 'Login', '${time}');`);
 
     if (temp === undefined) {
-        res.render('login-incorrect');
+        res.render('login', {message: 'Username or password incorrect!'});
     }
     else {
         req.app.set('user', userName);
@@ -74,6 +84,7 @@ app.post('/enterLogin', (req, res) => {
     };
 });
 
+// Add new account to database
 app.post('/createAccount', (req, res) => {
     const user = req.body.username;
     const pass = req.body.password;
@@ -85,23 +96,16 @@ app.post('/createAccount', (req, res) => {
     if (temp === undefined) {
         if (pass === passConfirm) {
             db.exec(`INSERT INTO users (user, pass) VALUES ('${user}', '${pass}')`);
-            res.render('create-account');
+            res.render('home');
         }
         else {
-            res.render('password-mismatch');
+            res.render('create-account', {message: 'Passwords must match!'});
         }
     }
-    else {res.render('username-exists')};
+    else {res.render('create-account', {message: 'Username already exists!'})};
  });
 
-app.post('/returnLogin', (req, res) => {
-    res.render('login');
-});
-
-app.post('/NewFitnessInfo', (req, res) => {
-    res.render('new-fitness-info');
-});
-
+// Add workout to database
 app.post('/enterWorkout', (req, res) => {
     const duration = req.body.duration;
     const type = req.body.type;
@@ -116,7 +120,7 @@ app.post('/returnHome', (req, res) => {
     res.render('home');
 });
 
-app.post('/DeleteAcntPg', (req, res) => {
+app.post('/deleteAccount', (req, res) => {
     const userName = req.app.get('user');
     db.exec(`DELETE FROM finess WHERE user = '${userName}'`);
     db.exec(`DELETE FROM users WHERE user = '${userName}'`);
