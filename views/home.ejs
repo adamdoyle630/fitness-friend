@@ -1,87 +1,36 @@
 <!DOCTYPE html>
 
 <body>
-    <link rel = "stylesheet" href = "homepage-styles.css">
-    <ul>
-        <li>
-            <label class = "title"> Homepage <br> </label>
-            <p>
-
-            </p>
-            <p>
-
-            </p>
-            <p>
-
-            </p>
-            <ul>
-                <li>
-                    <form method = "post" action = "NewFitnessInfo">
-                        <input type = "submit" value  = "New Fitness Info" class = "green">
-                    </form>
-                    
-                </li>
-                <p>
-
-                </p>
-                <p>
-
-                </p>
-
-                <li>
-                    <form method = "post" action = "/viewPastWorkouts">
-                        <input type = "submit" value = "Past Fitness Info" class = "blue">
-                    </form>
-                    
-                </li>
-                <p>
-
-                </p>
-                <p>
-
-                </p>
-        
-                <li>
-                    <form method = "post" action = "/DeleteAcntPg">
-                        <input type = "submit" value = "Delete Account" class = "red">
-                    </form>
-                </li>
-                <p>
-
-                </p>
-                <p>
-
-                </p>
-
-                <li>
-                    <form method = "post" action = "/viewLogs">
-                        <input type = "submit" value = "View Logs" class = "green">
-                    </form>
-                </li>
-
-                <p>
-
-                </p>
-                <p>
-
-                </p>
-
-                <li>
-                    <form method = "post" action = "/login">
-                        <input type = "submit" value = "Logout" class = "violet">
-                    </form>
-                    
-                </li>
-               
-            </ul>
-        </li>
-        <p>
-
-        </p>
-        <p>
-            
-        </p>
-        
-    </ul>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel = "stylesheet" href = "styles.css">
+    <h1 class="title">FitnessFriend</h1>
+    <div class="ui one column stackable center aligned page grid">
+        <div class="column four wide">
+            <form method = "post" action = "NewFitnessInfo">
+                <button class="fluid ui labeled icon green button" type="submit">
+                    <i class="square plus icon"></i>
+                    New Workout
+                </button>
+            </form>
+        </br>
+            <form method = "post" action = "/viewPastWorkouts">
+                <button class="fluid ui labeled icon blue button" type="submit">
+                    <i class="undo icon"></i>
+                    Past Workouts
+                </button>
+            </form>
+        </br>
+            <form method = "post" action = "/settings">
+                <button class="fluid ui labeled icon button" type="submit">
+                    <i class="settings icon"></i>
+                    Settings
+                </button>
+            </form>
+        </br>
+            <form method = "post" action = "/login">
+                <input class="fluid ui orange button" type="submit" value="Logout">
+            </form>
+        </br>
+        </div>
+    </div>
 </body>
