@@ -3,36 +3,35 @@
     <body>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link rel="stylesheet" href="styles.css">
-        <div>
-            <div class="ui center aligned grid container">
-              <div class="six wide column">
-                <img class="ui centered big image" src="/images/logo.png" alt="logo"/>
-                <% if (typeof(message) != 'undefined') { %>
-                    <p class="error-message">
-                      <%=message%>
-                    </p>
-                <% } %>
-                <form class="ui form" method="post" action="/enterLogin">
-                  <h2 class="ui dividing header">Sign In</h2>
-                  <!-- Username input -->
-                  <div class="field">
-                    <input type="text" name="username" id="username" placeholder="Username" />
-                  </div>
-                  <!-- Password input -->
-                  <div class="field">
-                    <input type="password" name="password" id="password" placeholder="Password" />
-                  </div>
-                  <!--Submit button-->
-                  <input type="submit" value="Continue" class="fluid ui primary button"/>
-                </br>
-                  <p class="ui horizontal divider">or</p>
-              </br>
-              <!--New account button-->
-                </form>
-                <form method="post" action="/new-account">
-                  <input type="submit" value="Create Account" class="ui big gray button"/>
-                </form>
+        <div class="ui center aligned grid container">
+          <div class="six wide column">
+            <img class="ui centered big image" src="/images/logo.png" alt="logo"/>
+            <% if (typeof(message) != 'undefined') { %>
+                <p class="error-message">
+                  <%=message%>
+                </p>
+            <% } %>
+            <form class="ui form" method="post" action="/enterLogin">
+              <h2 class="ui dividing header">Sign In</h2>
+              <!-- Username input -->
+              <div class="field">
+                <input type="text" name="username" id="username" placeholder="Username" />
               </div>
-            </div>
+              <!-- Password input -->
+              <div class="field">
+                <input type="password" name="password" id="password" placeholder="Password" />
+              </div>
+              <!--Submit button-->
+              <input type="submit" value="Continue" class="fluid ui primary button"/>
+            </br>
+              <p class="ui horizontal divider">or</p>
+          </br>
+          <!--New account button-->
+            </form>
+            <form method="post" action="/new-account">
+              <input type="submit" value="Create Account" class="ui big blue button"/>
+            </form>
+          </div>
+        </div>
     </body>
 </html>

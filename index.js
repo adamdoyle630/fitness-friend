@@ -67,21 +67,29 @@ app.post('/new-account', (req, res) => {
 
 // Validate user login
 app.post('/enterLogin', (req, res) => {
-    const userName = req.body.username;
-    const passWord = req.body.password;
-    const prepData = db.prepare(`SELECT * FROM users WHERE user = '${userName}' and pass = '${passWord}'`);
-    let temp = prepData.get();
+    // Get username and password
+    const user = req.body.username;
+    const pass = req.body.password;
 
-    const time = new Date(Date.now());
-    db.exec(`INSERT INTO log (user, type, date) VALUES ('${userName}', 'Login', '${time}');`);
+    // Validate username and password
+    if (user === '' || pass === '') {
+        res.render('login', {message: 'All fields are required!'});
+    } else {
+        const prepData = db.prepare(`SELECT * FROM users WHERE user = '${user}' and pass = '${pass}'`);
+        let temp = prepData.get();
+    
+        if (temp === undefined) {
+            res.render('login', {message: 'Username or password incorrect!'});
+        }
+        else {
+            req.app.set('user', user);
 
-    if (temp === undefined) {
-        res.render('login', {message: 'Username or password incorrect!'});
+            // Add login time to log
+            const time = new Date(Date.now());
+            db.exec(`INSERT INTO log (user, type, date) VALUES ('${user}', 'Login', '${time}');`);
+            res.render('home', {currentUser: user});
+        };
     }
-    else {
-        req.app.set('user', userName);
-        res.render('home');
-    };
 });
 
 // Add new account to database
@@ -96,7 +104,7 @@ app.post('/createAccount', (req, res) => {
     if (temp === undefined) {
         if (pass === passConfirm) {
             db.exec(`INSERT INTO users (user, pass) VALUES ('${user}', '${pass}')`);
-            res.render('home');
+            res.render('home', {currentUser: user});
         }
         else {
             res.render('create-account', {message: 'Passwords must match!'});
@@ -121,9 +129,10 @@ app.post('/returnHome', (req, res) => {
 });
 
 app.post('/deleteAccount', (req, res) => {
-    const userName = req.app.get('user');
-    db.exec(`DELETE FROM finess WHERE user = '${userName}'`);
-    db.exec(`DELETE FROM users WHERE user = '${userName}'`);
+    const user = req.app.get('user');
+    db.exec(`DELETE FROM finess WHERE user = '${user}'`);
+    db.exec(`DELETE FROM users WHERE user = '${user}'`);
+    db.exec(`DELETE FROM log WHERE user = ${user}`);
     res.render('delete-account');
 });
 

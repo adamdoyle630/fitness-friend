@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel = "stylesheet" href = "styles.css">
     <img class="ui centered medium image" src="/images/logo.png" alt="logo"/>
     <div class="ui one column stackable center aligned page grid">
-        <div class="column six wide">
+        <div class="eight wide column">
+            <h1 class="ui header">
+                Welcome, <%=currentUser%>
+            </h1>
             <form method="post" action="/new-workout">
                 <button class="fluid ui labeled icon green button" type="submit">
                     <i class="square plus icon"></i>
@@ -28,7 +30,10 @@
             </form>
         </br>
             <form method = "post" action = "/login">
-                <input class="fluid ui orange button" type="submit" value="Logout">
+                <button class="fluid ui labeled icon orange button" type="submit">
+                    <i class="left arrow icon"></i>
+                    Logout
+                </button>
             </form>
         </br>
         </div>
