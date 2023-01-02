@@ -11,18 +11,25 @@
   <div class="ui centered grid container">
     <div class="eight wide column">
       <h1 class="ui centered dividing header">Past Workouts</h1>
-      <p class="normal-text">
-        <div class="ui cards">
-          <% finess.forEach(function(dat) { %>
-            <div class="fluid ui card">
-              <div class="content">
-                <div class="header"><%= dat.date %></div>
-                <div class="description"><%= dat.duration %> minute <%= dat.type %></div>
+      <div class="ui cards">
+        <% finess.forEach(function(dat) { %>
+          <div class="fluid ui blue card">
+            <div class="content">
+              <div class="header"><%= dat.date %></div>
+              <div class="description"><%= dat.duration %> minute <%= dat.type %></div>
+              <div class="extra content">
+                <div class="ui right floated icon buttons">
+                  <button class="ui basic red button">
+                    <i class="ui trash icon"></i>
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
-        <% }); %>
-        </div>
-      </p>
+          </div>
+      <% }); %>
+      </div>
+    </br>
       <form method="post" action="/returnHome">
         <button class="fluid ui primary button">Back</button>
       </form>
