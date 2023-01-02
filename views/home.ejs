@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <body>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.0/semantic.min.css" integrity="sha512-PwhgdrueUt7iVICnZMjYcbiLalCztrVfzUIYXekIK8hZu4DQP141GrKh6fUHmNERWi4bGdBXIZqtBZnsSzHEMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel = "stylesheet" href = "styles.css">
     <img class="ui centered medium image" src="/images/logo.png" alt="logo"/>
+    <h1 class="ui centered header">
+        Welcome, <%=currentUser%>. What can we do for you today?
+    </h1>
     <div class="ui one column stackable center aligned page grid">
-        <div class="eight wide column">
-            <h1 class="ui header">
-                Welcome, <%=currentUser%>
-            </h1>
+        <div class="six wide column">
+        </br>
             <form method="post" action="/new-workout">
-                <button class="fluid ui labeled icon green button" type="submit">
+                <button class="fluid ui labeled icon primary big basic button" type="submit">
                     <i class="square plus icon"></i>
                     New Workout
                 </button>
             </form>
         </br>
             <form method="post" action="/view-fitness-log">
-                <button class="fluid ui labeled icon blue button" type="submit">
+                <button class="fluid ui labeled icon primary big basic button" type="submit">
                     <i class="undo icon"></i>
                     Past Workouts
                 </button>
             </form>
         </br>
             <form method = "post" action = "/settings">
-                <button class="fluid ui labeled icon button" type="submit">
+                <button class="fluid ui labeled icon primary big basic button" type="submit">
                     <i class="settings icon"></i>
                     Settings
                 </button>
             </form>
         </br>
             <form method = "post" action = "/login">
-                <button class="fluid ui labeled icon orange button" type="submit">
+                <button class="fluid ui labeled icon primary big basic button" type="submit">
                     <i class="left arrow icon"></i>
                     Logout
                 </button>
             </form>
-        </br>
         </div>
     </div>
 </body>

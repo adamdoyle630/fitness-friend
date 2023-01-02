@@ -4,25 +4,29 @@
   <meta charset="utf-8">
   <title>Past Workouts</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.0/semantic.min.css" integrity="sha512-PwhgdrueUt7iVICnZMjYcbiLalCztrVfzUIYXekIK8hZu4DQP141GrKh6fUHmNERWi4bGdBXIZqtBZnsSzHEMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
 <body>
-  <div class="text-box">
-    <h1>Past Workouts</h1>
-    <p class="normal-text">
-      <ul>
-        <% finess.forEach(function(dat) { %>
-          <h2><%= dat.date %></h2>
-          Duration: <%= dat.duration %>
-          <br>
-          Type: <%= dat.type %>
-          <br>
-      <% }); %>
-      </ul>
-    </p>
-    <form method = "post" action = "/returnHome">
-      <input type = "submit" value = "Back" class = "red">
-    </form>
+  <img class="ui centered medium image" src="/images/logo.png" alt="logo"/>
+  <div class="ui centered grid container">
+    <div class="eight wide column">
+      <h1 class="ui centered dividing header">Past Workouts</h1>
+      <p class="normal-text">
+        <div class="ui cards">
+          <% finess.forEach(function(dat) { %>
+            <div class="fluid ui card">
+              <div class="content">
+                <div class="header"><%= dat.date %></div>
+                <div class="description"><%= dat.duration %> minute <%= dat.type %></div>
+              </div>
+            </div>
+        <% }); %>
+        </div>
+      </p>
+      <form method="post" action="/returnHome">
+        <button class="fluid ui primary button">Back</button>
+      </form>
+    </div>
   </div>
  </body>
 </html>

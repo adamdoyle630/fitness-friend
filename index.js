@@ -54,7 +54,7 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-    res.render('home')
+    res.render('home', {currentUser: req.app.get('user')});
 });
 
  app.post('/new-workout', (req, res) => {
@@ -87,30 +87,36 @@ app.post('/enterLogin', (req, res) => {
             // Add login time to log
             const time = new Date(Date.now());
             db.exec(`INSERT INTO log (user, type, date) VALUES ('${user}', 'Login', '${time}');`);
-            res.render('home', {currentUser: user});
+            res.redirect('/home');
         };
     }
 });
 
-// Add new account to database
+// Validate account creation
 app.post('/createAccount', (req, res) => {
     const user = req.body.username;
     const pass = req.body.password;
     const passConfirm = req.body.passwordConfirm;
-
-    const prepData = db.prepare(`SELECT * FROM users WHERE user = '${user}'`);
-    let temp = prepData.get();
-
-    if (temp === undefined) {
-        if (pass === passConfirm) {
-            db.exec(`INSERT INTO users (user, pass) VALUES ('${user}', '${pass}')`);
-            res.render('home', {currentUser: user});
+    if (user === '' || pass === '' || passConfirm === '') {
+        res.render('create-account', {message: 'All fields are required!'});
+    } else {
+        const prepData = db.prepare(`SELECT * FROM users WHERE user = '${user}'`);
+        let temp = prepData.get();
+    
+        if (temp === undefined) {
+            if (pass === passConfirm) {
+                // Add account to database and log in
+                db.exec(`INSERT INTO users (user, pass) VALUES ('${user}', '${pass}')`);
+                const time = new Date(Date.now());
+                db.exec(`INSERT INTO log (user, type, date) VALUES ('${user}', 'Login', '${time}');`);
+                res.redirect('/home');
+            }
+            else {
+                res.render('create-account', {message: 'Passwords must match!'});
+            }
         }
-        else {
-            res.render('create-account', {message: 'Passwords must match!'});
-        }
+        else {res.render('create-account', {message: 'Username already exists!'})};
     }
-    else {res.render('create-account', {message: 'Username already exists!'})};
  });
 
 // Add workout to database
@@ -125,10 +131,10 @@ app.post('/enterWorkout', (req, res) => {
 });
 
 app.post('/returnHome', (req, res) => {
-    res.render('home');
+    res.redirect('/home')
 });
 
-app.post('/deleteAccount', (req, res) => {
+app.post('/delete-account', (req, res) => {
     const user = req.app.get('user');
     db.exec(`DELETE FROM finess WHERE user = '${user}'`);
     db.exec(`DELETE FROM users WHERE user = '${user}'`);
@@ -136,17 +142,13 @@ app.post('/deleteAccount', (req, res) => {
     res.render('delete-account');
 });
 
-app.post('/logout', (req, res) => {
-    res.render('login');
-});
-
-app.post('/viewLogs', (req, res) => {
+app.post('/view-logs', (req, res) => {
     const stmt = db.prepare(`SELECT * FROM log ORDER BY date DESC`);
     let all = stmt.all();
     res.render('user-logs', {log: all});
 });
 
-app.post('/viewPastWorkouts', (req, res) => {
+app.post('/view-fitness-log', (req, res) => {
     let userName = req.app.get('user');
     const stmt = db.prepare(`SELECT * FROM finess WHERE user = '${userName}' ORDER BY date DESC`);
     let all = stmt.all();
