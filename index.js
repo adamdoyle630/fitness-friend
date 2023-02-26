@@ -2,7 +2,7 @@ import express from 'express';
 import minimist from 'minimist';
 import Database from 'better-sqlite3';
 import path from 'path';
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 import { allowedNodeEnvironmentFlags } from 'process';
 
 // Args
@@ -33,7 +33,7 @@ try {
 }
 
 try {
-    db.exec(`CREATE TABLE IF NOT EXISTS finess (id INTEGER PRIMARY KEY AUTOINCREMENT, user VARCHAR, duration VARCHAR, type VARCHAR, date VARCHAR, time VARCHAR);`);
+    db.exec(`CREATE TABLE IF NOT EXISTS fitness (id INTEGER PRIMARY KEY AUTOINCREMENT, user VARCHAR, duration VARCHAR, type VARCHAR, date VARCHAR, time VARCHAR);`);
 } catch (error) {
     console.log(error)
 }
@@ -54,10 +54,10 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-    res.render('home', {currentUser: req.app.get('user')});
+    res.render('home', { currentUser: req.app.get('user') });
 });
 
- app.post('/new-workout', (req, res) => {
+app.post('/new-workout', (req, res) => {
     res.render('new-workout');
 });
 
@@ -73,13 +73,13 @@ app.post('/enterLogin', (req, res) => {
 
     // Validate username and password
     if (user === '' || pass === '') {
-        res.render('login', {message: 'All fields are required!'});
+        res.render('login', { message: 'All fields are required!' });
     } else {
         const prepData = db.prepare(`SELECT * FROM users WHERE user = '${user}' and pass = '${pass}'`);
         let temp = prepData.get();
-    
+
         if (temp === undefined) {
-            res.render('login', {message: 'Username or password incorrect!'});
+            res.render('login', { message: 'Username or password incorrect!' });
         }
         else {
             req.app.set('user', user);
@@ -98,11 +98,11 @@ app.post('/createAccount', (req, res) => {
     const pass = req.body.password;
     const passConfirm = req.body.passwordConfirm;
     if (user === '' || pass === '' || passConfirm === '') {
-        res.render('create-account', {message: 'All fields are required!'});
+        res.render('create-account', { message: 'All fields are required!' });
     } else {
         const prepData = db.prepare(`SELECT * FROM users WHERE user = '${user}'`);
         let temp = prepData.get();
-    
+
         if (temp === undefined) {
             if (pass === passConfirm) {
                 // Add account to database and log in
@@ -112,31 +112,37 @@ app.post('/createAccount', (req, res) => {
                 res.redirect('/home');
             }
             else {
-                res.render('create-account', {message: 'Passwords must match!'});
+                res.render('create-account', { message: 'Passwords must match!' });
             }
         }
-        else {res.render('create-account', {message: 'Username already exists!'})};
+        else { res.render('create-account', { message: 'Username already exists!' }) };
     }
- });
+});
 
 // Add workout to database
 app.post('/enterWorkout', (req, res) => {
-    const duration = req.body.duration;
     const type = req.body.type;
+    const duration = req.body.duration;
     const date = req.body.date;
-    const timeLogged = new Date(Date.now()); // Store when the entry was logged
-    let userName = req.app.get('user');
-    db.exec(`INSERT INTO finess (user, duration, type, date, time) VALUES ('${userName}', '${duration}', '${type}', '${date}', '${timeLogged}')`);
-    res.render('entry-success');
+    if (duration === '' || duration === '' || date === '') {
+        var message = 'All fields are required!';
+        res.render('new-workout', { message });
+        console.log(message);
+    } else {
+        const timeLogged = new Date(Date.now()); // Store when the entry was logged
+        let userName = req.app.get('user');
+        db.exec(`INSERT INTO fitness (user, duration, type, date, time) VALUES ('${userName}', '${duration}', '${type}', '${date}', '${timeLogged}')`);
+        res.render('entry-success');
+    }
 });
 
 app.post('/returnHome', (req, res) => {
     res.redirect('/home')
 });
 
-app.post('/delete-account', (req, res) => {
+app.post('/deleteAccount', (req, res) => {
     const user = req.app.get('user');
-    db.exec(`DELETE FROM finess WHERE user = '${user}'`);
+    db.exec(`DELETE FROM fitness WHERE user = '${user}'`);
     db.exec(`DELETE FROM users WHERE user = '${user}'`);
     db.exec(`DELETE FROM log WHERE user = ${user}`);
     res.render('delete-account');
@@ -145,20 +151,30 @@ app.post('/delete-account', (req, res) => {
 app.post('/view-logs', (req, res) => {
     const stmt = db.prepare(`SELECT * FROM log ORDER BY date DESC`);
     let all = stmt.all();
-    res.render('user-logs', {log: all});
+    res.render('user-logs', { log: all });
 });
 
 app.post('/view-fitness-log', (req, res) => {
     let userName = req.app.get('user');
-    const stmt = db.prepare(`SELECT * FROM finess WHERE user = '${userName}' ORDER BY date DESC`);
+    const stmt = db.prepare(`SELECT * FROM fitness WHERE user = '${userName}' ORDER BY id DESC`);
     let all = stmt.all();
-    res.render('fitness-logs', {finess: all});
-})
+    res.render('fitness-logs', { fitness: all });
+});
+
+app.post('/deleteWorkout', (req, res) => {
+    const workoutId = req.body.currentId;
+    console.log(workoutId);
+    db.exec(`DELETE FROM fitness WHERE id = "${workoutId}'`);
+    let userName = req.app.get('user');
+    const stmt = db.prepare(`SELECT * FROM fitness WHERE user = '${userName}' ORDER BY id DESC`);
+    let all = stmt.all();
+    res.render('fitness-logs', { fitness: all });
+});
 
 // Post 404 if no endpoint found
 app.get('*', (req, res) => {
     res.status(404).send('404 NOT FOUND')
-})
+});
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);

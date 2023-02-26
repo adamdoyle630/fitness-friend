@@ -1,42 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.0/semantic.min.css" integrity="sha512-PwhgdrueUt7iVICnZMjYcbiLalCztrVfzUIYXekIK8hZu4DQP141GrKh6fUHmNERWi4bGdBXIZqtBZnsSzHEMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <head>
-        <meta charset="utf-8">
-        <title>New Workout</title>
-    </head>
-    <body>
-        <img class="ui centered medium image" src="/images/logo.png" alt="logo"/>
-        <div class="ui center aligned grid container">
-            <div class="eight wide column">
-                <form class="ui form" method="post" action="/enterWorkout">
-                    <h2 class="ui dividing header">New Entry</h2>
-                    <!-- Workout type -->
-                    <select class="fluid ui dropdown" name="type">
-                        <option value="">Select type...</option>
-                        <option value="run">Run</option>
-                        <option value="walk">Walk</option>
-                        <option value="cycle">Cycle</option>
-                        <option value="swim">Swim</option>
-                        <option value="yoga">Yoga</option>
-                        <option value="weight training">Weight Training</option>
-                        <option value="other">Other</option>
-                    </select>
-                    </br>
-                    <!-- Workout duration -->
-                    <div class="field">
-                        <input type="text" name="duration" id="duration" placeholder="Enter Duration (mins)" />
-                    </div>
-                    <!-- Date -->
-                    <div class="field">
-                        <input type="text" name="date" id="date" placeholder="Date (MM/DD)"/>
-                    </div>
-                    <!-- Submit button -->
-                    <button class="fluid ui primary button">
-                        Submit
-                    </button>
-                </form>
-            </div>
+
+<head>
+    <meta charset="utf-8">
+    <title>New Workout</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.0/semantic.min.css"
+        integrity="sha512-PwhgdrueUt7iVICnZMjYcbiLalCztrVfzUIYXekIK8hZu4DQP141GrKh6fUHmNERWi4bGdBXIZqtBZnsSzHEMg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <img class="ui centered medium image" src="/images/logo.png" alt="logo" />
+    <div class="ui center aligned grid container">
+        <div class="eight wide column">
+            <% if (typeof(message) !='undefined' ) { %>
+                <div class="ui error message">
+                    <p>
+                        <%=message = 'Test'%>
+                    </p>
+                </div>
+            <% } %>
+            <form class="ui form" method="post" action="/enterWorkout">
+                <h2 class="ui dividing header">New Entry</h2>
+                <!-- Workout type -->
+                <select class="fluid ui dropdown" name="type" id="type">
+                    <option value="">Select type...</option>
+                    <option value="run">Run</option>
+                    <option value="walk">Walk</option>
+                    <option value="cycle">Cycle</option>
+                    <option value="swim">Swim</option>
+                    <option value="yoga">Yoga</option>
+                    <option value="weight training">Weight Training</option>
+                    <option value="other">Other</option>
+                </select>
+                </br>
+                <!-- Workout duration -->
+                <div class="field">
+                    <input type="text" name="duration" id="duration" placeholder="Enter Duration (mins)" />
+                </div>
+                <!-- Date -->
+                <div class="field">
+                    <input type="text" name="date" id="date" placeholder="Date (MM/DD)" />
+                </div>
+                <!-- Submit button -->
+                <button class="fluid ui primary button">
+                    Submit
+                </button>
+            </form>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

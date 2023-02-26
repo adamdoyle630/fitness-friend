@@ -1,25 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Past Workouts</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.0/semantic.min.css" integrity="sha512-PwhgdrueUt7iVICnZMjYcbiLalCztrVfzUIYXekIK8hZu4DQP141GrKh6fUHmNERWi4bGdBXIZqtBZnsSzHEMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.0/semantic.min.css"
+    integrity="sha512-PwhgdrueUt7iVICnZMjYcbiLalCztrVfzUIYXekIK8hZu4DQP141GrKh6fUHmNERWi4bGdBXIZqtBZnsSzHEMg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-  <img class="ui centered medium image" src="/images/logo.png" alt="logo"/>
+  <img class="ui centered medium image" src="/images/logo.png" alt="logo" />
   <div class="ui centered grid container">
     <div class="eight wide column">
       <h1 class="ui centered dividing header">Past Workouts</h1>
       <div class="ui cards">
-        <% finess.forEach(function(dat) { %>
-          <div class="fluid ui blue card">
+        <% fitness.forEach(function(dat) { %>
+          <!-- Create a card for each workout -->
+          <script>
+            const currentId = dat.id;
+          </script>
+          <div class="fluid ui blue card" id=currentId name=currentId>
             <div class="content">
-              <div class="header"><%= dat.date %></div>
-              <div class="description"><%= dat.duration %> minute <%= dat.type %></div>
+              <div class="header">
+                <%= dat.date %>
+              </div>
+              <div class="description">
+                <%= dat.duration %> minute <%= dat.type %>
+              </div>
               <div class="extra content">
                 <div class="ui right floated icon buttons">
-                  <button class="ui basic red button">
+                  <button type="submit" class="ui basic red button">
                     <i class="ui trash icon"></i>
                     Delete
                   </button>
@@ -27,13 +39,14 @@
               </div>
             </div>
           </div>
-      <% }); %>
+          <% }); %>
       </div>
-    </br>
+      </br>
       <form method="post" action="/returnHome">
         <button class="fluid ui primary button">Back</button>
       </form>
     </div>
   </div>
- </body>
+</body>
+
 </html>
